@@ -1,0 +1,6 @@
+/home/hans/Documents/Kafka-Tutorials-Producer/spring-kafka-java-config/src/main/java/com/howtodoinjava/kafka/demo/config/KafkaProducerConfig.java
+/home/hans/Documents/Kafka-Tutorials-Producer/spring-kafka-java-config/src/main/java/com/howtodoinjava/kafka/demo/config/KafkaConsumerConfig.java
+/home/hans/Documents/Kafka-Tutorials-Producer/spring-kafka-java-config/src/main/java/com/howtodoinjava/kafka/demo/model/User.java
+/home/hans/Documents/Kafka-Tutorials-Producer/spring-kafka-java-config/src/main/java/com/howtodoinjava/kafka/demo/service/KafKaProducerService.java
+/home/hans/Documents/Kafka-Tutorials-Producer/spring-kafka-java-config/src/main/java/com/howtodoinjava/kafka/demo/SpringBootKafkaAppApplication.java
+/home/hans/Documents/Kafka-Tutorials-Producer/spring-kafka-java-config/src/main/java/com/howtodoinjava/kafka/demo/controller/KafkaProducerController.java

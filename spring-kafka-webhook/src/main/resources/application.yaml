@@ -1,0 +1,7 @@
+spring:
+  kafka:
+    bootstrap-servers: "localhost:9092"
+  eventTopicMap:
+    create-event: fynd_create
+    update-event: fynd_update
+    delete-event: fynd_delete

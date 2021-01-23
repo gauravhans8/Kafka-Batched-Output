@@ -1,0 +1,28 @@
+spring:
+  kafka:
+    bootstrap-servers: "localhost:9092"
+    listener:
+      type: batch
+      concurrency: 1
+      ack-mode: manual
+    consumer:
+      update-event:
+        groupId: update-group-1
+        topic: fynd_update
+        filePattern: "update_events_"
+        timeThreshold: 60
+        sizeThreshold: 50
+      create-event:
+        groupId: create-group-1
+        topic: fynd_create
+        filePattern: "create_events_"
+        timeThreshold: 30
+        sizeThreshold: 25
+      delete-event:
+        groupId: delete-group-1
+        topic: fynd_delete
+        filePattern: "delete_events_"
+        timeThreshold: 120
+        sizeThreshold: 100
+  fileSystem:
+    parentDir: "/home/hans/batchedKafkaOutput/"
