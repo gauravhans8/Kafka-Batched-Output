@@ -22,6 +22,7 @@ public class KafKaConsumerService
 	@Autowired
 	private FileSystemService fileSystem;
 
+	//different kafka listeners for each topic
 	@KafkaListener(topics = "${spring.kafka.consumer.update-event.topic}", groupId = "${spring.kafka.consumer.update-event.groupId}")
 	public void consumeUpdateEvents(List<String> messages, Acknowledgment acknowledgment) {
 		try {
@@ -32,6 +33,7 @@ public class KafKaConsumerService
 			acknowledgment.acknowledge();
 		}catch (Exception e){
 			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -45,6 +47,7 @@ public class KafKaConsumerService
 			acknowledgment.acknowledge();
 		}catch (Exception e){
 			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 	}
 
@@ -61,11 +64,4 @@ public class KafKaConsumerService
 			throw new RuntimeException(e);
 		}
 	}
-
-//	@KafkaListener(topics = "${user.topic.name}",
-//			groupId = "${user.topic.group.id}",
-//			containerFactory = "userKafkaListenerContainerFactory")
-//	public void consume(User user) {
-//		logger.info(String.format("User created -> %s", user));
-//	}
 }

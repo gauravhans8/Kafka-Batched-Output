@@ -15,6 +15,8 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "spring.kafka")
 public class YAMLEventConfig {
 
+    //Maps consumer properties to Event class -> contains thresholds, group ids and topic names
+
     private Map<String, Event> consumer;
 
     public Map<String, Event> getConsumer() {

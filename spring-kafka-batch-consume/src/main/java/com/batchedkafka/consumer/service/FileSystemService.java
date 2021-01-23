@@ -14,6 +14,9 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
+/*
+*  Class Responsible for connecting to file system and servicing write requests
+*/
 @Service
 public class FileSystemService {
 
@@ -22,9 +25,11 @@ public class FileSystemService {
     @Value(value = "${spring.fileSystem.parentDir}")
     private String parentDirectory;
 
+    /*
+    ** Method that calls through Consumer Service for writing kafka messages
+     */
     public synchronized void mergeAndProcessMessages(List<String> messages, String filePattern, double sizeThreshold, long timeThreshold) {
-        messages.forEach(message -> logger.info("@@ " + message));
-        Path pathStat = Paths.get(parentDirectory+filePattern+"stat");
+        Path pathStat = Paths.get(parentDirectory+"stat_"+filePattern+"stat");
         Path pathStaging = Paths.get(parentDirectory+filePattern+"staging");
         Instant instant = Instant.now();
         long timeStampMillis = instant.getEpochSecond();
@@ -38,18 +43,18 @@ public class FileSystemService {
         logger.info("before writing to stage file :::::::::");
         creationTime = writeStagingFile(pathStaging,messages,creationTime);
         double newSize = new File(parentDirectory+filePattern+"staging").length() / 1024d;
-        logger.info("after writing to stage file ::::::::: " + newSize + "@@@@@@@" + sizeThreshold);
+        logger.info("after writing to stage file :: Size of File ::" + newSize + " Threshold ::" + sizeThreshold);
         if(sizeThreshold != 0 && newSize>=sizeThreshold) {
             moveStageFile(pathStaging, filePattern);
             creationTime = -1;
-            logger.info("##################" + creationTime);
         }
         writeStatFile(pathStat,creationTime);
         logger.info("File Operation Done ::::::");
     }
 
+    // Fetches creation time of stage files from stat file
     private long getLastFileCreationTime(Path pathStat){
-        logger.info("Inside stat exists");
+        logger.info("Reading Stat file contents");
         long creationTime = 0;
         try (BufferedReader bufferedReader = Files.newBufferedReader(pathStat)) {
             creationTime = Long.parseLong(bufferedReader.readLine());
@@ -57,10 +62,11 @@ public class FileSystemService {
             logger.error("Could not open Stat File, Exiting",e);
             throw new RuntimeException(e);
         }
-        logger.info("after reading stat file :: " + creationTime);
+        logger.info("Stat file Contenst :: creation time :: " + creationTime);
         return creationTime;
     }
 
+    //writes to stage files
     private long writeStagingFile(Path pathStaging, List<String> messages, long creationTime){
         try {
             if(Files.exists(pathStaging)) {
@@ -77,6 +83,7 @@ public class FileSystemService {
         return creationTime;
     }
 
+    //writes to stat file
     private void writeStatFile(Path pathStat, long creationTime){
         String newStats = creationTime + "";
         try {
@@ -87,6 +94,7 @@ public class FileSystemService {
         }
     }
 
+    //move stage files to final files when rotation condition is met
     private void moveStageFile(Path pathStaging, String filePattern) {
         try {
             logger.info("INSIDE MOVE METHOD ::::::::::::::::::::::");

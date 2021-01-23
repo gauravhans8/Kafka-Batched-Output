@@ -22,12 +22,13 @@ public class KafkaProducerController {
 	public ResponseEntity<String> sendMessageToKafkaTopic(@RequestBody String jsonString) {
 		try{
 			producerService.sendMessage(jsonString);
-			return new ResponseEntity<String>("Successfully Sent", HttpStatus.OK);
+			return new ResponseEntity<>("Successfully Sent", HttpStatus.OK);
 		} catch (IllegalArgumentException | JSONException e) {
-			return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+			//bad request if json is deformed or does not contain event type field
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e){
+			//server error if any other error
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		//this.producerService.sendMessage();
 	}
 }

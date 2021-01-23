@@ -22,11 +22,6 @@ public class KafkaConsumerConfig
 	@Value(value = "${spring.kafka.bootstrap-servers}")
 	private String bootstrapAddress;
 
-//	@Value(value = "${user.topic.group.id}")
-//	private String userGroupId;
-
-	// 1. Consume string data from Kafka
-
 	@Bean
 	public ConsumerFactory<Object, Object> consumerFactory() {
 		Map<String, Object> props = new HashMap<>();

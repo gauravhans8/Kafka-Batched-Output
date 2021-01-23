@@ -11,6 +11,8 @@ import java.util.Map;
 @EnableConfigurationProperties
 @ConfigurationProperties(prefix = "spring")
 public class YAMLConfig {
+
+    //get event to topic mapping
     Map<String,String> eventTopicMap;
 
     public Map<String, String> getEventTopicMap() {
