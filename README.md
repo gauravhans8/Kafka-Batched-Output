@@ -37,6 +37,7 @@ A project that takes event data from a webhook, pushes it into kafka and creates
      - Stat file is updated with either new stage file creation time or old creation time (in case of no rotation)
 
 #### Additional Notes
+- For simplicity size threshold is in kBs and time threshold is in seconds(so for minutes you would have to put in multiples of 60)
 - Make sure the output directory is created beforehand.
 - Make sure to enter that output directory in testing script too and also edit the directory where source file is kept.
 - NiFi can easily be used for the whole consume process (much better fault tolerant and configurable behavior and whole flow can be
