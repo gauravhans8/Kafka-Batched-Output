@@ -40,8 +40,8 @@ A project that takes event data from a webhook, pushes it into kafka and creates
 - For simplicity size threshold is in kBs and time threshold is in seconds(so for minutes you would have to put in multiples of 60)
 - Make sure the output directory is created beforehand.
 - Make sure to enter that output directory in testing script too and also edit the directory where source file is kept.
-- NiFi can easily be used for the whole consume process (much better fault tolerant and configurable behavior and whole flow can be
-can be replicated easily for new topics)
+- NiFi can easily be used for the whole consume process (much better fault tolerant and configurable behavior and whole flow
+can be replicated easily for new topics/events)
 - Apache spark was overkill as no processing needed to be done on the consume side and lesser control over output files structure and name and sizes.
 - New services can be easily added in the spring project as its decoupled from kafka consumption process (services like HDFS service)
 
@@ -60,7 +60,7 @@ Features
   - Automatic topic inferring through event_type field and yaml config
   
 Improvements
-  - Much better tuned kafka producer (ack, in-sync replica, multiple threads)
+  - Much better tuned kafka producer (ack, in-sync replica)
   - Cluster environment is not tested
 #
 ### spring-kafka-batch-consume
@@ -68,7 +68,7 @@ Improvements
 A kafka consumer service that writes output in batches per topic
 ```
 Features
-  - Individual Topic configurations of size and time Thresholds
+  - Individual Topic configurations of size and time thresholds
   - Output File Pattern for each topic (act as prefixes)
   - Concurrency control for kafka consumers
   - Batch Consumption
@@ -80,5 +80,5 @@ Improvements
   - Schedulers that periodically rotate file as per topic (only needed if no data is received and time threshold has passed)
     - Currently as soon as new batch comes for writing, thresolds are checked and files are rotated
   - Further tuning of kafka consumers using dynamically calculated fetch max bytes and max poll records property
-    - Dynamic as in based on size thresholds (it should be sufficiently small (but not too small) so that file can be roatated
-      with minimal deviation from size thresholds
+    - Dynamic as in based on size thresholds (it should be sufficiently small (but not too small) so that files can be rotated
+      with minimal deviation from size thresholds)
